@@ -9,8 +9,8 @@ import sawant.mihir.restexceptionhandling.exception.WrongCouponException;
 public record DiscountExceptionControllerAdvice() {
 
     @ExceptionHandler(WrongCouponException.class)
-    public ResponseEntity<ErrorDetails> exceptionWrongCouponHandler(){
-        ErrorDetails errorDetails = new ErrorDetails("Coupon Code is Invalid");
+    public ResponseEntity<ErrorDetails> exceptionWrongCouponHandler(WrongCouponException ex){
+        ErrorDetails errorDetails = new ErrorDetails(ex.getMessage());
         return ResponseEntity
                 .badRequest()
                 .body(errorDetails);
