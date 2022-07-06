@@ -20,17 +20,12 @@ public record DiscountController(DiscountService discountService) {
     }
 
     @PostMapping("/discount")
-    public ResponseEntity<?> getDiscount(@RequestParam String couponCode){
-        try{
+    public ResponseEntity<DiscountDetails> getDiscount(@RequestParam String couponCode){
             double discount = discountService.calcDiscount(couponCode.toUpperCase(Locale.ROOT));
             return ResponseEntity
                     .status(HttpStatus.ACCEPTED)
                     .body(new DiscountDetails(discount, "Coupon Code Applied Successfully"));
-        }catch (WrongCouponException ex){
-            return ResponseEntity
-                    .badRequest()
-                    .body(new ErrorDetails(ex.getMessage()));
-        }
+
     }
 
 
